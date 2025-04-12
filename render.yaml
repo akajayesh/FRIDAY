@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: fridaybot
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn fridaybot.wsgi
+    autoDeploy: true
