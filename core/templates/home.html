@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FRIDAY - Your Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #0f172a;
+            font-family: 'Open Sans', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+    
+        .container {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 1000px;
+            box-sizing: border-box;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #38bdf8;
+            margin-bottom: 20px;
+        }
+    
+        .chat-box {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            max-height: 320px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    
+        .user {
+            color: #1e3a8a; /* Deep blue – trust */
+        }
+    
+        .friday {
+            color: #0f766e; /* Teal – calm */
+        }
+    
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 12px;
+            box-sizing: border-box;
+        }
+    
+        form input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            background: #334155;
+            color: white;
+            font-family: 'Open Sans', sans-serif;
+            box-sizing: border-box;
+        }
+    
+        form button {
+            width: 100%;
+            padding: 14px 16px;
+            border: none;
+            background: #38bdf8;
+            color: black;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Open Sans', sans-serif;
+            transition: background 0.3s ease;
+            box-sizing: border-box;
+        }
+    
+        form button:hover {
+            background: #0ea5e9;
+        }
+    </style>
+<body>
+    <div class="container">
+        <h1> F.R.I.D.A.Y 🤖</h1>
+        
+        <div class="chat-box">
+            {% for chat in history %}
+                <div class="user"><strong>User:</strong> {{ chat.user_input }}</div>
+                <div class="friday"><strong>FRIDAY:</strong> {{ chat.bot_response }}</div>
+                <hr style="border: 0.5px solid #334155;">
+            {% endfor %}
+        </div>
+
+        {% if response %}
+            <p id="typing">FRIDAY is typing...</p>
+            <script>
+                setTimeout(() => {
+                    const safeResponse = "{{ response|escapejs }}";
+                    document.getElementById("typing").innerText = safeResponse;
+                }, 1000);
+            </script>
+        {% endif %}        
+
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="command" placeholder="Type a command..." autofocus required>
+            <button type="submit">Ask F.R.I.D.A.Y</button>
+        </form>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const response = "{{ response|escapejs }}";
+        
+                const siteMap = {
+                    "open_youtube": "https://www.youtube.com",
+                    "open_google": "https://www.google.com",
+                    "open_linkedin": "https://www.linkedin.com",
+                    "open_instagram": "https://www.instagram.com",
+                    "open_facebook": "https://www.facebook.com",
+                    "open_stackoverflow": "https://stackoverflow.com",
+                    "open_chatgpt": "https://chat.openai.com",
+                    "open_github": "https://github.com",
+                    "open_gfg": "https://www.geeksforgeeks.org",
+                    "open_whatsapp": "https://web.whatsapp.com"
+                };
+        
+                // Trigger website opening only if mapped
+                if (response in siteMap) {
+                    console.log("Triggering site open:", siteMap[response]);
+                    window.open(siteMap[response], "_blank");
+                } else {
+                    console.log("No site triggered. Response:", response);
+                }
+            });
+        </script>
+        
+        {% if close_browser %}
+        <script>
+            setTimeout(() => {
+                window.open('', '_self');
+                window.close();
+            }, 2000);
+        </script>
+        {% endif %}
+
+        {% if close_browser %}
+       <p><strong>Click below to exit:</strong></p>
+       <button onclick="window.close()">Close Tab</button>
+        {% endif %}
+
+    </div>
+</body>
+</html>
