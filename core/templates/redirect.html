@@ -2,20 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Opening Website</title>
+    <title>Open Website</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-        window.onload = function () {
-            const win = window.open("{{ site_url }}", "_blank");
-            if (!win) {
-                alert("Popup blocked! Please allow popups for this site.");
-            } else {
-                window.location.href = "/";  // Return to FRIDAY home after opening new tab
-            }
-        }
-    </script>
 </head>
-<body style="background-color: #0f172a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh;">
-    <h2>Opening {{ site_url }} in new tab... 🔗</h2>
+<body style="background-color: #0f172a; color: white; font-family: 'Open Sans', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center;">
+    <h2>Ready to open {{ site_url }}?</h2>
+    <p>Click below to launch in a new tab.</p>
+    <button onclick="window.open('{{ site_url }}', '_blank')" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; border-radius: 10px; background: #0ea5e9; color: white; border: none; cursor: pointer;">
+        Open Now 🔗
+    </button>
+    <a href="/" style="margin-top: 30px; font-size: 14px; color: #93c5fd;">← Go back to FRIDAY</a>
 </body>
 </html>
