@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Opening Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        window.onload = function () {
+            const win = window.open("{{ site_url }}", "_blank");
+            if (!win) {
+                alert("Popup blocked! Please allow popups for this site.");
+            } else {
+                window.location.href = "/";  // Return to FRIDAY home after opening new tab
+            }
+        }
+    </script>
+</head>
+<body style="background-color: #0f172a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <h2>Opening {{ site_url }} in new tab... 🔗</h2>
+</body>
+</html>

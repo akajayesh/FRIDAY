@@ -5,6 +5,7 @@ import re
 from datetime import datetime
 from .browser_help import open_website
 from .models import ChatHistory
+from django.http import request
 
 def friday_response(command):
     command = command.lower()
@@ -259,12 +260,14 @@ def friday_response(command):
     elif "restart" in command:
         return "Restart command is disabled for now."
 
-    elif command in ["open youtube", "open google", "open linkedin",
-                     "open whatsapp", "open gfg", "open chatgpt", "open instagram",
-                     "github", "open stackoverflow", "open goclasses"
-    ]:
-        keyword = command.replace("open ", "")
-        return open_website(keyword)
+    elif "open youtube" in command.lower():
+        return render(request, 'redirect.html', {'site_url': 'https://youtube.com'})
+    
+    elif "open google" in command.lower():
+        return render(request, 'redirect.html', {'site_url': 'https://google.com'})
+    
+    elif "open linkedin" in command.lower():
+        return render(request, 'redirect.html', {'site_url': 'https://linkedin.com'})
 
     elif "open" in command:
         return "That app isn’t supported yet, boss. Wanna add it?"             
@@ -272,7 +275,15 @@ def friday_response(command):
     else:
         return "Sorry, I didn’t understand that. Try another command?"
 
-    # ==== Fallback ====
+    '''
+    elif command in ["open youtube", "open google", "open linkedin",
+                     "open whatsapp", "open gfg", "open chatgpt", "open instagram",
+                     "github", "open stackoverflow", "open goclasses"
+    ]:
+        keyword = command.replace("open ", "")
+        return open_website(keyword)'''
+
+
 
 def home(request):
     response = None
@@ -281,12 +292,29 @@ def home(request):
 
     if request.method == 'POST':
         user_command = request.POST.get('command')
+        command = user_command.lower()
+
+        # ✅ 1. Cloud-safe website redirect using frontend JS
+        site_redirects = {
+            "open youtube": "https://youtube.com",
+            "open google": "https://google.com",
+            "open linkedin": "https://linkedin.com",
+            "open amazon": "https://amazon.in",
+            "open facebook": "https://facebook.com",
+            "open instagram": "https://instagram.com"
+        }
+
+        for key in site_redirects:
+            if key in command:
+                return render(request, 'redirect.html', {'site_url': site_redirects[key]})
+
+        # ✅ 2. Continue to normal response logic
         response = friday_response(user_command)
 
-        if any(word in user_command.lower() for word in ["bye", "exit", "quit", "see you", "close", "goodbye"]):
-           return redirect('/bye/')
+        if any(word in command for word in ["bye", "exit", "quit", "see you", "close", "goodbye"]):
+            return redirect('/bye/')
 
-        elif any(word in user_command.lower() for word in ["who made you", "who built you", "your creator", "your developer", "who is your dev"]):
+        elif any(word in command for word in ["who made you", "who built you", "your creator", "your developer", "who is your dev"]):
             response = "I was created by — A Proud and Pragmatic Lad, named as Jayesh Eknath Sutar. ⚡"
 
         ChatHistory.objects.create(user_input=user_command, bot_response=response)
@@ -296,5 +324,11 @@ def home(request):
         'response': response,
         'user_command': user_command,
         'history': history,
-        'close_browser' : close_browser
+        'close_browser': close_browser
     })
+
+
+def clear_history(request):
+    if request.method == "POST":
+        ChatHistory.objects.all().delete()
+    return redirect('/')    

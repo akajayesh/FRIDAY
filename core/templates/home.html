@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FRIDAY - Your Assistant</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <style>
@@ -16,14 +17,14 @@
     
         .container {
             background: #1e293b;
-            padding: 30px;
+            padding: 20px;
             border-radius: 20px;
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            width: 90%;
-            max-width: 1000px;
-            box-sizing: border-box;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
         }
-    
+
         h1 {
             text-align: center;
             color: #38bdf8;
@@ -89,6 +90,14 @@
         form button:hover {
             background: #0ea5e9;
         }
+
+        .button-container {
+           display: flex;
+           flex-direction: column;
+           gap: 14px; /* ⬅️ This is your spacing between Ask & Clear */
+           margin-top: 20px;
+        }
+
     </style>
 <body>
     <div class="container">
@@ -112,13 +121,19 @@
             </script>
         {% endif %}        
 
-
-        <form method="POST">
-            {% csrf_token %}
-            <input type="text" name="command" placeholder="Type a command..." autofocus required>
-            <button type="submit">Ask F.R.I.D.A.Y</button>
-        </form>
-
+        <div class="button-container">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="command" placeholder="Type a command..." autofocus required>
+                <button type="submit">Ask F.R.I.D.A.Y</button>
+            </form>
+        
+            <form method="POST" action="/clear/">
+                {% csrf_token %}
+                <button type="submit" class="clear-btn">Clear Chat History</button>
+            </form>
+        </div>
+                  
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 const response = "{{ response|escapejs }}";
