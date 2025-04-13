@@ -11,9 +11,21 @@ def friday_response(command):
     command = command.lower()
 
     # ==== Basic Greetings ====
-    if command in ["Hi","hi", "hello", "hey", "HII", "Hey"]:
+    if command in ["Hi","hi", "hello", "hey", "Hey" , "Hii"]:
         return "Hi there! I'm FRIDAY. How can I help you?"
     
+    elif "good morning" in command.lower() :
+        return "Good Morning User 🌄!"
+
+    elif "good afternoon" in command.lower() :
+        return "Good Afternoon User ☀️!"
+
+    elif "good evening" in command.lower() :
+        return "Good Evening User 🌇!"
+
+    elif "good night" in command.lower() :
+        return "Good Night User 🌆!"
+
     elif "name" in command:
         return "I am F.R.I.D.A.Y — your assistant made by a cool developer 😎"
 
