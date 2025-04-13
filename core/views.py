@@ -26,11 +26,20 @@ def friday_response(command):
     elif "good night" in command.lower() :
         return "Good Night User 🌆!"
 
-    elif "name" in command:
+    elif "name" in command.lower():
         return "I am F.R.I.D.A.Y — your assistant made by a cool developer 😎"
 
-    elif "how are you" in command:
+    elif "how are you" in command.lower():
         return "I'm always operational 💻 What about you?"
+
+    elif "who are you" in command.lower():
+        return "I am F.R.I.D.A.Y. I am a chatbot that does some small stuff"
+
+    elif "what's up" in command.lower():
+       return "I am a chatbot that does some small stuff..."       
+
+    elif "what can you do" in command.lower():
+        return "Hold on User! I am not ChatGpt! I am an Chatbot 😂" 
 
     # ==== Application Openers ====
     elif "notepad" in command:
