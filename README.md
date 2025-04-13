@@ -12,7 +12,7 @@ FRIDAY is a smart, local assistant chatbot built using **Python, Django, and bas
 - 📂 Opens local apps (Notepad, Calculator, Camera, WhatsApp, etc.)
 - 🌐 Opens selected websites (YouTube, Google, LinkedIn, etc.)
 - 💬 Stores and displays last 10 chat messages
-- 🎨 Clean, color psychology-based UI with OnePlus Sans font
+- 🎨 Clean, color based UI with OnePlus Sans font
 - 💻 Built from scratch in C originally, now ported to Django
 - 💾 SQLite database integration
 - 🎬 Typing animation for smoother UX
