@@ -6,6 +6,7 @@ from datetime import datetime
 from .browser_help import open_website
 from .models import ChatHistory
 from django.http import request
+from django.utils.safestring import mark_safe
 
 def friday_response(command):
     command = command.lower()
@@ -336,9 +337,19 @@ def home(request):
             return redirect('/bye/')
 
         elif any(word in command for word in ["who made you", "who built you", "your creator", "your developer", "who is your dev"]):
-            response = "I was created by — A Proud and Pragmatic Lad, named as Jayesh Eknath Sutar. ⚡"
-
+            response = "I was created by Jayesh Eknath Sutar. "
+            
+        elif any(word in command.lower() for word in ["portfolio", "how can i find him", "how can i contact him", "contact info"]):
+            response = mark_safe("""
+                <p> You can find him on:</p>
+                <div class="btn-group">
+                    <a class="contact-btn" href="https://github.com/akajayesh" target="_blank">GitHub</a>
+                    <a class="contact-btn" href="https://linkedin.com/in/jayesh-sutar-89951825a" target="_blank">LinkedIn</a>
+                    <a class="contact-btn" href="mailto:jayeshsutar76@gmail.com">Email</a>                                 
+                </div>
+         """)           
         ChatHistory.objects.create(user_input=user_command, bot_response=response)
+        return redirect('/')
 
     history = ChatHistory.objects.order_by('-timestamp')[:10]
     return render(request, 'home.html', {
@@ -353,3 +364,4 @@ def clear_history(request):
     if request.method == "POST":
         ChatHistory.objects.all().delete()
     return redirect('/')    
+

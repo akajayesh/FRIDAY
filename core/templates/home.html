@@ -43,7 +43,19 @@
             width: 100%;
             box-sizing: border-box;
         }
-    
+
+        .contact-btn {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 16px;
+            background-color: #0ea5e9;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }        
+        
         .user {
             color: #1e3a8a; /* Deep blue – trust */
         }
@@ -98,6 +110,10 @@
            margin-top: 20px;
         }
 
+        .contact-btn:hover{
+            background-color: #0284c7;
+        }
+        
     </style>
 <body>
     <div class="container">
@@ -106,7 +122,7 @@
         <div class="chat-box">
             {% for chat in history %}
                 <div class="user"><strong>User:</strong> {{ chat.user_input }}</div>
-                <div class="friday"><strong>FRIDAY:</strong> {{ chat.bot_response }}</div>
+                <div class="friday"><strong>FRIDAY:</strong> {{ chat.bot_response | safe }}</div>
                 <hr style="border: 0.5px solid #334155;">
             {% endfor %}
         </div>
