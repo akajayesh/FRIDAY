@@ -9,7 +9,6 @@ FRIDAY is a smart, local assistant chatbot built using **Python, Django, and bas
 - 🧠 Smart response handling (greetings, vulgarity filters, shutdown, etc.)
 - 🧮 Geometry calculator (area, volume, surface area for 2D/3D shapes)
 - 🕰️ Displays live time, date, and day
-- 📂 Opens local apps (Notepad, Calculator, Camera, WhatsApp, etc.)
 - 🌐 Opens selected websites (YouTube, Google, LinkedIn, etc.)
 - 💬 Stores and displays last 10 chat messages
 - 🎨 Clean, color based UI with OnePlus Sans font
@@ -37,3 +36,11 @@ cd FRIDAY
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
+
+
+⚠️ Note: This project is hosted on Render’s free plan.  
+The service **sleeps after 15 minutes** of inactivity to save server cost.  
+Please allow 10–20 seconds for the bot to wake up if it's been idle.
+
+✅ Local version supports full functionality like app opening and system-level tasks.  
+🌐 Cloud version handles website redirects, chat, date, time, and math commands.
